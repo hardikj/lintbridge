@@ -4,35 +4,29 @@ var express = require('express');
 var app = express(),
 	bodyParser = require('body-parser');
 
-app.use(bodyParser());
+app.use(bodyParser({limit:'50mb'}));
 
-// find all lints
+
+// find all issues
 app.get('/issues', linterService.findAll);
 
-// filter lints by wiki name
+// filter by ID
+app.get('/issues/:id', linterService.filterById);
+
+// filter issues by type on any wiki
+app.get('/issues/type/:type', linterService.filterByType);
+
+// filter issues by wiki name
 app.get('/:wiki/issues', linterService.filterByWiki);
 
-app.get('/:wiki/issues/:type', linterService.filterByWikiAndType);
-// filter lint by type on any wiki
-app.get('/issues/:type', linterService.filterByType);
+// filter by wiki name and issue type
+app.get('/:wiki/issues/type/:type', linterService.filterByWikiAndType);
+
+// filter issues by page name
+app.get('/:wiki/issues/:page', linterService.filterByPage);
 
 // Add a new lint
 app.post('/add', linterService.addLint);
  
 app.listen(3000);
 console.log('Listening on port 3000...');
-
-
-
-
-/*
-TODO
-Queries to support- 
-
-/wiki/issues/Page-Name - show issues of this page name
-/wiki/issue-id - show this isseue
-
-* change /lint/ to /issue/
-* add Json headers to the response
-
-*/

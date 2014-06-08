@@ -29,6 +29,16 @@ exports.findAll = function(req, res) {
 	});
 };
 
+exports.filterById = function(req, res) {
+	var id = req.params.id;
+	res.setHeader("Content-Type", "application/json");
+	db.collection('lints', function(err, collection){
+		collection.findOne({'_id':id}, function(err, item) {
+			res.send(item);
+		});
+	});
+};
+
 exports.filterByType = function(req, res) {
 	var type = req.params.type;
 	var lints = '';
@@ -64,6 +74,27 @@ exports.filterByWiki = function(req, res) {
 			res.send(lints);
 		});
 	});
+};
+
+exports.filterByPage = function(req, res) {
+	var wiki = req.params.wiki,
+		page = req.params.page;
+	var lints = '';
+
+	res.setHeader("Content-Type", "application/json");
+	console.log('Retrieving broken wikitext of page:' + page);
+
+	db.collection('lints', function(err, collection) {
+		var stream = collection.find({'wiki':wiki, 'page':page}).stream();
+		stream.on("data", function(item) {
+			lints += JSON.stringify(item, null, 4) + '\n';
+		});
+		stream.on("end", function() {
+			res.send(lints);
+		});
+	});
+
+
 };
 
 exports.filterByWikiAndType = function(req, res) {
