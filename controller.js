@@ -19,22 +19,24 @@ db.open(function(err, db) {
 	}
 });
 
-exports.findAll = function(req, res) {
+var linterService = require('./LinterService');
 
-	res.setHeader("Content-Type", "application/json");
+exports.findAll = function(req, res){
+
 	db.collection('lints', function(err, collection) {
 		collection.find().toArray(function(err, items) {
-			res.send(items);
+			res.render('index', {title:"Lint Bridge", entries:items});
 		});
 	});
 };
 
-exports.filterById = function(req, res) {
+exports.filterById = function (req, res){
+
 	var id = req.params.id;
-	res.setHeader("Content-Type", "application/json");
+
 	db.collection('lints', function(err, collection){
 		collection.findOne({'_id':new BSON.ObjectID(id)}, function(err, item) {
-			res.send(item);
+			res.render('issue', {entries:item});
 		});
 	});
 };
@@ -43,17 +45,17 @@ exports.filterByType = function(req, res) {
 	var type = req.params.type;
 	var lints = [];
 
-	res.setHeader("Content-Type", "application/json");
 	console.log('Retrieving broken wikitext of type: ' + type);
 
 	db.collection('lints', function(err, collection) {
-
 		var stream = collection.find({'type':type}).stream();
 		stream.on("data", function(item) {
 			lints.push(item);
 		});
+
 		stream.on("end", function() {
-			res.json(lints);
+			var items = lints;
+			res.render('index', {title:"My Blog", entries:items});
 		});
 	});
 };
@@ -62,7 +64,6 @@ exports.filterByWiki = function(req, res) {
 	var wiki = req.params.wiki;
 	var lints = [];
 
-	res.setHeader("Content-Type", "application/json");
 	console.log('Retrieving broken wikitext of wiki:' + wiki);
 
 	db.collection('lints', function(err, collection) {
@@ -71,7 +72,7 @@ exports.filterByWiki = function(req, res) {
 			lints.push(item);
 		});
 		stream.on("end", function() {
-			res.json(lints);
+			res.render('index', {title:"My Blog", entries:lints});
 		});
 	});
 };
@@ -81,7 +82,6 @@ exports.filterByPage = function(req, res) {
 		page = req.params.page;
 	var lints = [];
 
-	res.setHeader("Content-Type", "application/json");
 	console.log('Retrieving broken wikitext of page:' + page);
 
 	db.collection('lints', function(err, collection) {
@@ -90,64 +90,7 @@ exports.filterByPage = function(req, res) {
 			lints.push(item);
 		});
 		stream.on("end", function() {
-			res.json(lints);
+			res.render('index', {title:"My Blog", entries:lints});
 		});
-	});
-};
-
-exports.filterByWikiAndType = function(req, res) {
-	var wiki = req.params.wiki,
-		type = req.params.type;
-	var lints = [];
-
-	res.setHeader("Content-Type", "application/json");
-	console.log('Retrieving broken wikitext of wiki:' + wiki);
-
-	db.collection('lints', function(err, collection) {
-		var stream = collection.find({'wiki':wiki, 'type':type}).stream();
-		stream.on("data", function(item) {
-			lints.push(item);
-		});
-		stream.on("end", function() {
-			res.json(lints);
-		});
-	});
-};
-
-exports.addLint = function(req, res){
-	var issues = req.body,
-		BreakException = {},
-		resid;
-
-	db.collection('lints', function(err, collection) {
-		if (issues instanceof Array){
-			try {
-				issues.forEach(function(a){
-					collection.insert(a, {safe: true}, function(err, result){
-						if (err) {
-							throw  BreakException;
-						} else {
-							resid = result[0];
-							console.log('Success: ' + JSON.stringify(result[0].type));
-						}
-					});
-				});
-				res.send('Issues Logged Successfully');
-			} catch(e) {
-				if (e!==BreakException) {
-					res.send({'error':'An error has occurred'});
-					throw e;
-				}
-			}
-		} else {
-			collection.insert(issues, {safe: true}, function(err, result){
-				if (err) {
-					res.send({'error':'An error has occurred'});
-				} else {
-					console.log('Success: ' + JSON.stringify(result[0]._id));
-					res.send("Issue Logged Successfully :" + result[0]._id);
-				}
-			});
-		}
 	});
 };

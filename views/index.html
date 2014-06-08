@@ -1,0 +1,37 @@
+<html>
+<head>
+    <title>Home Page</title>
+</head>
+ 
+<body>
+<h1>Lint Bridge!</h1>
+<table>
+<thead>
+	<tr>
+		<th>No</th>
+		<th>Type</th>
+    	<th>Page</th>
+    	<th>Wiki</th>
+  	</tr>
+</thead>
+<tbody>
+
+{{#each entries}}
+	<tr>
+		<td> <a href="/_html/issues/{{_id}}"> {{@index}}</a><td>
+		<td> <a href="/_html/issues/type/{{type}}">{{type}}</a><td>
+		<td> <a href="/_html/{{wiki}}/issues/{{page}}">{{page}}</a><td>
+		<td> <a href="/_html/{{wiki}}/issues">{{wiki}}</a><td>
+	<tr>
+{{/each}}
+
+</tbody>
+</table>
+<footer>
+<p>
+    <a href="/">Home</a> ~ <a href="/about">About Me</a> ~ <a href="/article">Some Article</a>
+</p>
+</footer>
+ 
+</body>
+</html>
