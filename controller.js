@@ -32,11 +32,15 @@ exports.findAll = function(req, res){
 
 exports.filterById = function (req, res){
 
-	var id = req.params.id;
+	var id = req.params.id,
+		arr = false;
 
 	db.collection('lints', function(err, collection){
 		collection.findOne({'_id':new BSON.ObjectID(id)}, function(err, item) {
-			res.render('issue', {entries:item});
+			if(item.src instanceof Array){
+				arr = true;
+			}
+			res.render('issue', {entries:item, arr:arr});
 		});
 	});
 };

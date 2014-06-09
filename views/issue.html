@@ -20,8 +20,10 @@
 	  	</a>
 	 	<div class="ui inverted simple dropdown item">
 			Filter <i class="dropdown icon"></i>
-			<div class="menu">
-			  <div class="item">By Wiki Name</div>
+			<div class="menu">  
+			  <div class="item">
+			  		<a href="/_html/wiki">By Wiki Name</a>
+			  </div>
 			  <div class="item">By Type</div>
 			  <div class="item"> Other </div>
 			</div>
@@ -40,14 +42,28 @@
 			<p><a href="/_html/{{entries.wiki}}/issues/{{entries.page}}">{{entries.page}}</a></p>
 			<div class="ui ribbon label"> wiki </div>
 			<p><a href="/_html/{{entries.wiki}}/issues/">{{entries.wiki}}</a></p>
+			<div class="ui ribbon label"> DSR </div>
+			<p>{{entries.dsr}}</p>
 		</div>
 		
 		<div class="ui vertical divider">
 	    </div>
 	    
 	    <div class="center aligned column">
-	    	{{entries.src}}
-	    </div>
+	    	<div class="ui top right attached label">
+	    		Faulty Wiki Text
+	    	</div>
+	    <br><br>
+	    <div>
+	    	{{#if arr}}
+	    		{{#each entries.src}}
+	    			<li>{{this}}</li>
+	    		{{/each}}
+	    	{{else}}
+	    		{{entries.src}}
+	    	{{/if}}
+	   </div>
+
 	 </div>
 	</div>
 </div>
