@@ -1,0 +1,39 @@
+/* Space out content a bit */
+body {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+@media (min-width: 1068px) {
+  .seg {
+    max-width: 1030px;
+  }
+}
+
+#header {
+	margin-left: auto;
+	margin-right: auto;
+	width:1560px;
+}
+
+.tcontainer {
+	margin-left: auto;
+	margin-right: auto;
+	width:1460px;
+}
+
+#seg {
+	margin-left: auto;
+	margin-right: auto;
+	width:960px;
+}
+
+.seg-narrow > hr {
+  margin: 30px 0;
+}
+
+/* Main marketing message and sign up button */
+.seg {
+  text-align: center;
+  border-bottom: 1px solid #e5e5e5;
+}
