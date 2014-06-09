@@ -10,9 +10,10 @@ var hbs = require('hbs');
 app.set('view engine', 'html');
 app.engine('html', hbs.__express);
 app.use(bodyParser({limit:'50mb'}));
+app.use('/static', express.static(__dirname + '/static'));
 
 /*
-	html routes
+*	html routes
 */
 
 app.get('/_html/issues', controller.findAll);
@@ -28,9 +29,12 @@ app.get('/_html/:wiki/issues', controller.filterByWiki);
 // filter issues by page name
 app.get('/_html/:wiki/issues/:page', controller.filterByPage);
 
+// show All wiki names in database
+app.get('/_html/wiki', controller.findWiki);
+
 
 /*
-	Api routes 
+*	Api routes 
 */
 
 // find all issues

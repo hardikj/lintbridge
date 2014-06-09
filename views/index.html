@@ -1,37 +1,79 @@
 <html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <head>
     <title>Home Page</title>
+	<link href="/static/collections/table.css" rel="stylesheet">
+    <link href="/static/dropdown.css" rel="stylesheet">
+    <link href="/static/collections/menu.css" rel="stylesheet">
+    <link href="/static/custom.css" rel="stylesheet">
+
 </head>
  
 <body>
-<h1>Lint Bridge!</h1>
-<table>
-<thead>
-	<tr>
-		<th>No</th>
-		<th>Type</th>
-    	<th>Page</th>
-    	<th>Wiki</th>
-  	</tr>
-</thead>
-<tbody>
+<br>
 
-{{#each entries}}
-	<tr>
-		<td> <a href="/_html/issues/{{_id}}"> {{@index}}</a><td>
-		<td> <a href="/_html/issues/type/{{type}}">{{type}}</a><td>
-		<td> <a href="/_html/{{wiki}}/issues/{{page}}">{{page}}</a><td>
-		<td> <a href="/_html/{{wiki}}/issues">{{wiki}}</a><td>
-	<tr>
-{{/each}}
-
-</tbody>
-</table>
-<footer>
-<p>
-    <a href="/">Home</a> ~ <a href="/about">About Me</a> ~ <a href="/article">Some Article</a>
-</p>
-</footer>
- 
+<div id="header">
+	<div class="ui large inverted menu">
+	  	<a href="/_html/issues" class="active item">
+	    	<i class="home icon"></i> Lint Bridge
+	  	</a>
+	 	<div class="ui inverted simple dropdown item">
+			Filter <i class="dropdown icon"></i>
+			<div class="menu">
+			  <div class="item">
+			  	<a href="/_html/wiki">By Wiki Name</a>
+			  </div>
+			  <div class="item">By Type</div>
+			  <div class="item"> Other </div>
+			</div>
+	    </div>
+	</div>
+</div>
+<br>
+<br>
+<br>
+<div class="tcontainer">
+	{{#if list}}
+	<table class="ui two column table basic">
+		<thead>
+			<tr>
+				<th>No</th>
+				<th >Wiki Name</th>
+		  	</tr>
+	  	<thead>
+	  	<tbody>
+			{{#each entries ~}}
+			<tr>
+				<td>{{~@index}}</td>
+				<td><a href="/_html/{{this}}/issues/">{{this}}</a></td>
+			</tr>
+			{{~/each}}
+		<tbody>
+	</table>
+	{{else}}
+	<table class="ui five column table basic">
+		<thead>
+			<tr>
+				<th>No</th>
+				<th >Type</th>
+		    	<th>Page</th>
+		    	<th>Wiki</th>
+		    	<th>Fix</th>
+		  	</tr>
+	  	<thead>
+	  	<tbody>
+			{{#each entries ~}}
+			<tr>
+				<td>{{~@index}}</td>
+				<td><a href="/_html/issues/type/{{type}}">{{~type}}</a></td>
+				<td><a href="/_html/{{wiki}}/issues/{{page}}">{{~page}}</a></td>
+				<td><a href="/_html/{{wiki}}/issues/">{{~wiki}}</a></td>
+				<td class="active"><i class="attention icon"><a href="/_html/issues/{{_id}}">Fix This</a></td>
+			</tr>
+			{{~/each}}
+		<tbody>
+	</table>
+	{{/if}}
+</div>
 </body>
 </html>

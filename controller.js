@@ -55,7 +55,7 @@ exports.filterByType = function(req, res) {
 
 		stream.on("end", function() {
 			var items = lints;
-			res.render('index', {title:"My Blog", entries:items});
+			res.render('index', {entries:items});
 		});
 	});
 };
@@ -72,7 +72,7 @@ exports.filterByWiki = function(req, res) {
 			lints.push(item);
 		});
 		stream.on("end", function() {
-			res.render('index', {title:"My Blog", entries:lints});
+			res.render('index', {entries:lints});
 		});
 	});
 };
@@ -90,7 +90,17 @@ exports.filterByPage = function(req, res) {
 			lints.push(item);
 		});
 		stream.on("end", function() {
-			res.render('index', {title:"My Blog", entries:lints});
+			res.render('index', {entries:lints});
 		});
+	});
+};
+
+exports.findWiki = function(req,res){
+
+	console.log('Retrieving list of all wikis availabe');
+
+	db.collection('lints', function(err, collection) {
+		collection.distinct('wiki', function(err, item) {
+			res.render('index', {entries:item, list:true}); });
 	});
 };
