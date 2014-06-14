@@ -99,6 +99,36 @@ exports.filterByPage = function(req, res) {
 	});
 };
 
+exports.filterAllByPage = function(req, res) {
+	var wiki = req.params.wiki,
+		page = req.params.page;
+	var lints = [];
+
+	console.log('Retrieving broken wikitext of page:' + page);
+
+	db.collection('lints', function(err, collection) {
+		var stream = collection.find({'wiki':wiki, 'page':page}).stream();
+
+		stream.on("data", function(item) {
+			item.s = item.src;
+			if (item.src instanceof Array) {
+				item.arr = true;
+				if(item.src.length>16) {
+					item.src = item.src.slice(0, 17);
+					item.strip = true;
+				}
+			} else if (item.src.length>827) {
+				item.src = item.src.substring(0, 827);
+				item.strip = true;
+			}
+			lints.push(item);
+		});
+		stream.on("end", function() {
+			res.render('issues', {entries:lints});
+		});
+	});
+};
+
 exports.findWiki = function(req,res){
 
 	console.log('Retrieving list of all wikis availabe');

@@ -1,12 +1,13 @@
 <html>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <head>
-    <title>Home Page</title>
+	<title>Home Page</title>
 	<link href="/static/collections/table.css" rel="stylesheet">
-    <link href="/static/dropdown.css" rel="stylesheet">
-    <link href="/static/collections/menu.css" rel="stylesheet">
-    <link href="/static/custom.css" rel="stylesheet">
-
+	<link href="/static/dropdown.css" rel="stylesheet">
+	<link href="/static/collections/menu.css" rel="stylesheet">
+	<link href="/static/custom.css" rel="stylesheet">
+	<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+	<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 </head>
  
 <body>
@@ -56,19 +57,24 @@
 			<tr>
 				<th>No</th>
 				<th >Type</th>
-		    	<th>Page</th>
-		    	<th>Wiki</th>
-		    	<th>Fix</th>
-		  	</tr>
-	  	<thead>
-	  	<tbody>
+				<th>Page</th>
+				<th>Wiki</th>
+				<th>Action</th>
+			</tr>
+			<thead>
+			<tbody>
 			{{#each entries ~}}
 			<tr>
 				<td>{{~@index}}</td>
 				<td><a href="/_html/issues/type/{{type}}">{{~type}}</a></td>
 				<td><a href="/_html/{{wiki}}/issues/{{page}}">{{~page}}</a></td>
 				<td><a href="/_html/{{wiki}}/issues/">{{~wiki}}</a></td>
-				<td class="active"><i class="attention icon"><a href="/_html/issues/{{_id}}">Fix This</a></td>
+				<td class="active">
+					<i class="attention icon">
+						<a href="/_html/issues/{{_id}}">Fix This</a> | &nbsp
+						<a href="/_html/{{wiki}}/allissues/{{page}}">Fix All</a>
+					</i>
+				</td>
 			</tr>
 			{{~/each}}
 		<tbody>

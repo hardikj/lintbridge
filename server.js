@@ -29,6 +29,9 @@ app.get('/_html/:wiki/issues', controller.filterByWiki);
 // filter issues by page name
 app.get('/_html/:wiki/issues/:page', controller.filterByPage);
 
+// filter issues with src by page name
+app.get('/_html/:wiki/allissues/:page', controller.filterAllByPage);
+
 // show All wiki names in database
 app.get('/_html/wiki', controller.findWiki);
 
@@ -37,26 +40,30 @@ app.get('/_html/wiki', controller.findWiki);
 *	Api routes 
 */
 
+app.get("/", function(req, res){
+	res.render('main');
+});
+
 // find all issues
-app.get('/issues', linterService.findAll);
+app.get('/_api/issues', linterService.findAll);
 
 // filter by ID
-app.get('/issues/:id', linterService.filterById);
+app.get('/_api/issues/:id', linterService.filterById);
 
 // filter issues by type on any wiki
-app.get('/issues/type/:type', linterService.filterByType);
+app.get('/_api/issues/type/:type', linterService.filterByType);
 
 // filter issues by wiki name
-app.get('/:wiki/issues', linterService.filterByWiki);
+app.get('/_api/:wiki/issues', linterService.filterByWiki);
 
 // filter by wiki name and issue type
-app.get('/:wiki/issues/type/:type', linterService.filterByWikiAndType);
+app.get('/_api/:wiki/issues/type/:type', linterService.filterByWikiAndType);
 
 // filter issues by page name
-app.get('/:wiki/issues/:page', linterService.filterByPage);
+app.get('/_api/:wiki/issues/:page', linterService.filterByPage);
 
 // Add a new lint
-app.post('/add', linterService.addLint);
+app.post('/_api/add', linterService.addLint);
  
 app.listen(3000);
 
