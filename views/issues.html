@@ -34,6 +34,18 @@
 </div>
 <br><br>
 <div id="seg">
+
+	<div class="ui secondary raised segment">
+		<p> 
+			<a style="margin-right:50px" class="ui label"> Page </a>
+			<a href="/_html/{{entries.1.wiki}}/issues/page/{{entries.1.page}}">{{entries.1.page}}</a>
+		</p>
+		<p>
+			<a style="margin-right:50px" class="ui label"> Wiki </a>
+			<a href="/_html/{{entries.1.wiki}}/issues">{{entries.1.wiki}}</a>
+		</p>
+	</div>
+
 	{{#each entries}}
 	<div class="ui blue raised segment">
 	  <div class="ui two column grid">
@@ -42,10 +54,6 @@
 				<p><a href="/_html/issues/{{_id}}">{{_id}}</a></p>
 				<div class="ui ribbon label"> Type </div>
 				<p><a href="/_html/issues/type/{{type}}">{{type}}</a></p>
-				<div class="ui ribbon label"> Page </div>
-				<p><a href="/_html/{{wiki}}/issues/{{page}}">{{page}}</a></p>
-				<div class="ui ribbon label"> wiki </div>
-				<p><a href="/_html/{{wiki}}/issues/">{{wiki}}</a></p>
 				<div class="ui ribbon label"> DSR </div>
 				<p>{{dsr}}</p>
 			</div>
