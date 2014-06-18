@@ -37,7 +37,7 @@ exports.filterById = function (req, res){
 
 	db.collection('lints', function(err, collection){
 		collection.findOne({'_id':new BSON.ObjectID(id)}, function(err, item) {
-			if(item.src instanceof Array){
+			if (item.src instanceof Array) {
 				arr = true;
 			}
 			res.render('issue', {entries:item, arr:arr});
@@ -45,7 +45,7 @@ exports.filterById = function (req, res){
 	});
 };
 
-exports.filterByType = function(req, res) {
+exports.filterByType = function(req, res, next) {
 	var type = req.params.type;
 	var lints = [];
 
@@ -58,13 +58,16 @@ exports.filterByType = function(req, res) {
 		});
 
 		stream.on("end", function() {
-			var items = lints;
-			res.render('index', {entries:items});
+			if (lints.length > 0) {
+				res.render('index', {entries:lints});
+			} else {
+				next();
+			}
 		});
 	});
 };
 
-exports.filterByWiki = function(req, res) {
+exports.filterByWiki = function(req, res, next) {
 	var wiki = req.params.wiki;
 	var lints = [];
 
@@ -76,12 +79,39 @@ exports.filterByWiki = function(req, res) {
 			lints.push(item);
 		});
 		stream.on("end", function() {
-			res.render('index', {entries:lints});
+			if (lints.length > 0) {
+				res.render('index', {entries:lints});
+			} else {
+				next();
+			}
 		});
 	});
 };
 
-exports.filterByPage = function(req, res) {
+exports.filterByWikiAndType = function(req, res, next){
+	var wiki = req.params.wiki,
+		type = req.params.type;
+
+	var lints = [];
+
+	console.log('Retrieving broken wikitext of wiki:' + wiki);
+
+	db.collection('lints', function(err, collection) {
+		var stream = collection.find({'wiki':wiki, 'type':type}).stream();
+		stream.on("data", function(item) {
+			lints.push(item);
+		});
+		stream.on("end", function() {
+			if (lints.length > 0) {
+				res.render('index', {entries:lints});
+			} else {
+				next();
+			}
+		});
+	});
+};
+
+exports.filterByPage = function(req, res, next) {
 	var wiki = req.params.wiki,
 		page = req.params.page;
 	var lints = [];
@@ -94,12 +124,40 @@ exports.filterByPage = function(req, res) {
 			lints.push(item);
 		});
 		stream.on("end", function() {
-			res.render('index', {entries:lints});
+			if (lints.length > 0) {
+				res.render('index', {entries:lints});
+			} else {
+				next();
+			}
 		});
 	});
 };
 
-exports.filterAllByPage = function(req, res) {
+exports.filterByPageRevision = function(req, res, next){
+	var wiki = req.params.wiki,
+		page = req.params.page,
+		revision = parseInt(req.params.revision, 10);
+	var lints = [];
+
+	console.log('Retrieving broken wikitext of page:' + page);
+
+	db.collection('lints', function(err, collection) {
+		var stream = collection.find({'wiki':wiki, 'page':page, 'revision':revision}).stream();
+		stream.on("data", function(item) {
+			lints.push(item);
+		});
+		stream.on("end", function() {
+			if (lints.length > 0) {
+				res.render('index', {entries:lints});
+			} else {
+				next();
+			}
+		});
+	});
+
+};
+
+exports.filterAllByPage = function(req, res, next) {
 	var wiki = req.params.wiki,
 		page = req.params.page;
 	var lints = [];
@@ -113,7 +171,7 @@ exports.filterAllByPage = function(req, res) {
 			item.s = item.src;
 			if (item.src instanceof Array) {
 				item.arr = true;
-				if(item.src.length>16) {
+				if (item.src.length>16) {
 					item.src = item.src.slice(0, 17);
 					item.strip = true;
 				}
@@ -124,7 +182,49 @@ exports.filterAllByPage = function(req, res) {
 			lints.push(item);
 		});
 		stream.on("end", function() {
-			res.render('issues', {entries:lints});
+			if (lints.length > 0) {
+				res.render('index', {entries:lints});
+			} else {
+				next();
+			}
+		});
+	});
+};
+
+exports.filterAllByRevision = function(req, res, next) {
+
+	var wiki = req.params.wiki,
+		page = req.params.page,
+		revision = parseInt(req.params.revision, 10);
+
+	var lints = [];
+
+	console.log('Retrieving broken wikitext of page :' + page + ' and rev:' + revision);
+
+	db.collection('lints', function(err, collection) {
+		
+		var stream = collection.find({'wiki':wiki, 'page':page, 'revision':revision}).stream();
+
+		stream.on("data", function(item) {
+			item.s = item.src;
+			if (item.src instanceof Array) {
+				item.arr = true;
+				if (item.src.length>16) {
+					item.src = item.src.slice(0, 17);
+					item.strip = true;
+				}
+			} else if (item.src.length>827) {
+				item.src = item.src.substring(0, 827);
+				item.strip = true;
+			}
+			lints.push(item);
+		});
+		stream.on("end", function() {
+			if (lints.length > 0) {
+				res.render('index', {entries:lints});
+			} else {
+				next();
+			}
 		});
 	});
 };

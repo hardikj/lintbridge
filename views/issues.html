@@ -1,48 +1,14 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html>
-<head>
-		<title>Lint Bridge</title>
-		<link href="/static/elements/segment.css" rel="stylesheet">
-		<link href="/static/elements/label.css" rel="stylesheet">
-		<link href="/static/elements/divider.css" rel="stylesheet">
-		<link href="/static/collections/grid.css" rel="stylesheet">
-		<link href="/static/collections/menu.css" rel="stylesheet">
-		<link href="/static/dropdown.css" rel="stylesheet">
-		<link href="/static/custom.css" rel="stylesheet">
-		<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-		<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-</head>
- 
-<body>
 
-<div id="header">
-	<div class="ui large inverted menu">
-			<a href="/_html/issues" class="active item">
-				<i class="home icon"></i> Lint Bridge
-			</a>
-		<div class="ui inverted simple dropdown item">
-			Filter <i class="dropdown icon"></i>
-			<div class="menu">  
-				<div class="item">
-					<a href="/_html/wiki">By Wiki Name</a>
-				</div>
-				<div class="item">By Type</div>
-				<div class="item"> Other </div>
-			</div>
-		</div>
-	</div>
-</div>
-<br><br>
 <div id="seg">
 
 	<div class="ui secondary raised segment">
 		<p> 
 			<a style="margin-right:50px" class="ui label"> Page </a>
-			<a href="/_html/{{entries.1.wiki}}/issues/page/{{entries.1.page}}">{{entries.1.page}}</a>
+			<a href="/_html/{{entries.0.wiki}}/issues/page/{{entries.0.page}}">{{entries.0.page}}</a>
 		</p>
 		<p>
 			<a style="margin-right:50px" class="ui label"> Wiki </a>
-			<a href="/_html/{{entries.1.wiki}}/issues">{{entries.1.wiki}}</a>
+			<a href="/_html/{{entries.0.wiki}}/issues">{{entries.0.wiki}}</a>
 		</p>
 	</div>
 
@@ -90,5 +56,3 @@
 				$(this).parent().replaceWith(a); 
 		});
 </script>
-</body>
-</html>
