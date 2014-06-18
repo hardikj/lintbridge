@@ -183,7 +183,7 @@ exports.filterAllByPage = function(req, res, next) {
 		});
 		stream.on("end", function() {
 			if (lints.length > 0) {
-				res.render('index', {entries:lints});
+				res.render('issus', {entries:lints});
 			} else {
 				next();
 			}
@@ -221,7 +221,7 @@ exports.filterAllByRevision = function(req, res, next) {
 		});
 		stream.on("end", function() {
 			if (lints.length > 0) {
-				res.render('index', {entries:lints});
+				res.render('issues', {entries:lints});
 			} else {
 				next();
 			}

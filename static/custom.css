@@ -32,8 +32,11 @@ body {
   margin: 30px 0;
 }
 
-/* Main marketing message and sign up button */
-.seg {
+.f04img {
+	margin-bottom: 30px;
+}
+
+.f04 {
   text-align: center;
-  border-bottom: 1px solid #e5e5e5;
+  border-top: 1px solid #e5e5e5;
 }
