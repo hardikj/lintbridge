@@ -89,6 +89,9 @@ app.get('/_html/:wiki/allissues/:page/:revision', controller.filterAllByRevision
 // show All wiki names in database
 app.get('/_html/wiki', controller.findWiki);
 
+// show All types in database
+app.get('/_html/type', controller.findTypes);
+
 
 /*
 *	Api routes 

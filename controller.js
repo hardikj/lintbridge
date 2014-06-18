@@ -80,7 +80,7 @@ exports.filterByWiki = function(req, res, next) {
 		});
 		stream.on("end", function() {
 			if (lints.length > 0) {
-				res.render('index', {entries:lints});
+				res.render('index', {entries:lints, bywiki:true});
 			} else {
 				next();
 			}
@@ -236,5 +236,15 @@ exports.findWiki = function(req,res){
 	db.collection('lints', function(err, collection) {
 		collection.distinct('wiki', function(err, item) {
 			res.render('index', {entries:item, list:true}); });
+	});
+};
+
+exports.findTypes = function(req,res){
+
+	console.log('Retrieving list of all Types availabe');
+
+	db.collection('lints', function(err, collection) {
+		collection.distinct('type', function(err, item) {
+			res.render('index', {entries:item, list:true, ltype:true}); });
 	});
 };

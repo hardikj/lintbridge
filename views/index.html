@@ -5,14 +5,22 @@
 		<thead>
 			<tr>
 				<th>No</th>
-				<th >Wiki Name</th>
+				{{#if ltype}}
+				<th >Issue Type</th>
+				{{else}}
+				<th >{Wiki Name</th>
+				{{/if}}
 		  	</tr>
 	  	<thead>
 	  	<tbody>
 			{{#each entries ~}}
 			<tr>
 				<td>{{~@index}}</td>
+				{{#if ../ltype}}
+				<td><a href="/_html/issues/{{this}}">{{this}}</a></td>
+				{{else}}
 				<td><a href="/_html/{{this}}/issues/">{{this}}</a></td>
+				{{/if}}
 			</tr>
 			{{~/each}}
 		<tbody>
@@ -32,7 +40,11 @@
 			{{#each entries ~}}
 			<tr>
 				<td>{{~@index}}</td>
+				{{#if bywiki}}
 				<td><a href="/_html/issues/type/{{type}}">{{~type}}</a></td>
+				{{else}}
+				<td><a href="/_html/{{wiki}}/issues/type/{{type}}">{{~type}}</a></td>
+				{{/if}}
 				<td><a href="/_html/{{wiki}}/issues/{{page}}/{{revision}}">{{~page}}</a></td>
 				<td><a href="/_html/{{wiki}}/issues/">{{~wiki}}</a></td>
 				<td class="active">
