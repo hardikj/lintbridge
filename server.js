@@ -30,11 +30,11 @@ app.use(function(req, res, next){
 	res.type('txt').send('Not found');
 });
 
-app.use(function(err, req, res, next){
+/*app.use(function(err, req, res, next){
   
-  res.status(err.status || 500);
+res.status(err.status || 500);
   res.render('500', { error: err });
-});
+});*/
 
 app.get('/404', function(req, res, next){
   next();
@@ -91,7 +91,7 @@ app.get('/_html/wiki', controller.findWiki);
 
 // show All types in database
 app.get('/_html/type', controller.findTypes);
-
+	
 
 /*
 *	Api routes 

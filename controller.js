@@ -19,14 +19,20 @@ db.open(function(err, db) {
 	}
 });
 
-var linterService = require('./LinterService');
+var linterService = require('./LinterService'),
+	request = require('request');
 
 exports.findAll = function(req, res){
+	var url = require('url'),
+		url_parts = url.parse(req.url, true),
+		query = url_parts.query.from || '';
 
-	db.collection('lints', function(err, collection) {
-		collection.find().toArray(function(err, items) {
-			res.render('index', {title:"Lint Bridge", entries:items});
-		});
+    request.get('http://localhost:3000/_api/issues?from='+query,
+                function (error, response, body) {
+                    if (!error && response.statusCode === 200) {
+						body = JSON.parse(body);
+                        res.render('index', {title:"Lint Bridge", entries:body});
+                    }
 	});
 };
 
@@ -52,19 +58,18 @@ exports.filterByType = function(req, res, next) {
 
 	console.log('Retrieving broken wikitext of type: ' + type);
 
-	db.collection('lints', function(err, collection) {
-		var stream = collection.find({'type':type}).stream();
-		stream.on("data", function(item) {
-			lints.push(item);
-		});
+	var url = require('url'),
+		url_parts = url.parse(req.url, true),
+		query = url_parts.query.from || '';
 
-		stream.on("end", function() {
-			if (lints.length > 0) {
-				res.render('index', {entries:lints});
-			} else {
-				next();
-			}
-		});
+    request.get('http://localhost:3000/_api/issues/type/'+type+'?from='+query,
+                function (error, response, body) {
+                    if (!error && response.statusCode === 200) {
+						body = JSON.parse(body);
+                        res.render('index', {entries:body});
+                    } else {
+						next();
+					}
 	});
 };
 
@@ -74,18 +79,18 @@ exports.filterByWiki = function(req, res, next) {
 
 	console.log('Retrieving broken wikitext of wiki:' + wiki);
 
-	db.collection('lints', function(err, collection) {
-		var stream = collection.find({'wiki':wiki}).stream();
-		stream.on("data", function(item) {
-			lints.push(item);
-		});
-		stream.on("end", function() {
-			if (lints.length > 0) {
-				res.render('index', {entries:lints, bywiki:true});
-			} else {
-				next();
-			}
-		});
+	var url = require('url'),
+		url_parts = url.parse(req.url, true),
+		query = url_parts.query.from || '';
+
+    request.get('http://localhost:3000/_api/'+wiki+'/issues/?from='+query,
+                function (error, response, body) {
+                    if (!error && response.statusCode === 200) {
+						body = JSON.parse(body);
+                        res.render('index', {entries:body, bywiki:true});
+                    } else {
+						next();
+					}
 	});
 };
 
@@ -96,19 +101,18 @@ exports.filterByWikiAndType = function(req, res, next){
 	var lints = [];
 
 	console.log('Retrieving broken wikitext of wiki:' + wiki);
+	var url = require('url'),
+		url_parts = url.parse(req.url, true),
+		query = url_parts.query.from || '';
 
-	db.collection('lints', function(err, collection) {
-		var stream = collection.find({'wiki':wiki, 'type':type}).stream();
-		stream.on("data", function(item) {
-			lints.push(item);
-		});
-		stream.on("end", function() {
-			if (lints.length > 0) {
-				res.render('index', {entries:lints});
-			} else {
-				next();
-			}
-		});
+    request.get('http://localhost:3000/_api/'+wiki+'/issues/type/'+type+'?from='+query,
+                function (error, response, body) {
+                    if (!error && response.statusCode === 200) {
+						body = JSON.parse(body);
+                        res.render('index', {entries:body});
+                    } else {
+						next();
+					}
 	});
 };
 
@@ -119,18 +123,18 @@ exports.filterByPage = function(req, res, next) {
 
 	console.log('Retrieving broken wikitext of page:' + page);
 
-	db.collection('lints', function(err, collection) {
-		var stream = collection.find({'wiki':wiki, 'page':page}).stream();
-		stream.on("data", function(item) {
-			lints.push(item);
-		});
-		stream.on("end", function() {
-			if (lints.length > 0) {
-				res.render('index', {entries:lints});
-			} else {
-				next();
-			}
-		});
+	var url = require('url'),
+		url_parts = url.parse(req.url, true),
+		query = url_parts.query.from || '';
+
+    request.get('http://localhost:3000/_api/'+wiki+'/issues/'+page+'?from='+query,
+                function (error, response, body) {
+                    if (!error && response.statusCode === 200) {
+						body = JSON.parse(body);
+                        res.render('index', {entries:body});
+                    } else {
+						next();
+					}
 	});
 };
 
@@ -141,21 +145,19 @@ exports.filterByPageRevision = function(req, res, next){
 	var lints = [];
 
 	console.log('Retrieving broken wikitext of page:' + page);
+	var url = require('url'),
+		url_parts = url.parse(req.url, true),
+		query = url_parts.query.from || '';
 
-	db.collection('lints', function(err, collection) {
-		var stream = collection.find({'wiki':wiki, 'page':page, 'revision':revision}).stream();
-		stream.on("data", function(item) {
-			lints.push(item);
-		});
-		stream.on("end", function() {
-			if (lints.length > 0) {
-				res.render('index', {entries:lints});
-			} else {
-				next();
-			}
-		});
+    request.get('http://localhost:3000/_api/'+wiki+'/issues/'+page+"/"+revision+'?from='+query,
+                function (error, response, body) {
+                    if (!error && response.statusCode === 200) {
+						body = JSON.parse(body);
+                        res.render('index', {entries:body});
+                    } else {
+						next();
+					}
 	});
-
 };
 
 exports.filterAllByPage = function(req, res, next) {
