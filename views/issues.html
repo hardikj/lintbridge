@@ -2,17 +2,21 @@
 <div id="seg">
 
 	<div class="ui secondary raised segment">
-		<p> 
-			<a style="margin-right:50px" class="ui label"> Page </a>
-			<a href="/_html/{{entries.0.wiki}}/issues/page/{{entries.0.page}}">{{entries.0.page}}</a>
-		</p>
 		<p>
 			<a style="margin-right:50px" class="ui label"> Wiki </a>
 			<a href="/_html/{{entries.0.wiki}}/issues">{{entries.0.wiki}}</a>
 		</p>
+		<p> 
+			<a style="margin-right:47px" class="ui label"> Page </a>
+			<a href="/_html/{{entries.0.wiki}}/issues/page/{{entries.0.page}}">{{entries.0.page}}</a>
+		</p>
+		<p>
+			<a style="margin-right:24px" class="ui label"> Revision </a>
+			<a href="{{entries.0.wikiurl}}&oldid={{entries.0.revision}}" target="_">{{entries.0.revision}}</a>
+		</p>
 		<p>
 			<a style="margin-right:50px" class="ui blue label"> Edit </a>
-			<a href="{{entries.0.wikiurl}}">Click Here</a>
+			<a href="{{entries.0.wikiurl}}&action=edit" target="_">Click Here</a>
 		</p>
 	</div>
 
