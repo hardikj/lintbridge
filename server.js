@@ -47,6 +47,28 @@ app.get('/403', function(req, res, next){
   next(err);
 });
 
+// handle bars helpers
+
+hbs.registerHelper('next', function(lvalue, rvalue, options) {
+    if (arguments.length < 3)
+        throw new Error("Handlebars Helper equal needs 2 parameters");
+    if( lvalue!="next" ) {
+        return options.inverse(this);
+    } else {
+        return options.fn(this);
+    }
+});
+
+hbs.registerHelper('prev', function(lvalue, rvalue, options) {
+    if (arguments.length < 3)
+        throw new Error("Handlebars Helper equal needs 2 parameters");
+    if( lvalue!="prev" ) {
+        return options.inverse(this);
+    } else {
+        return options.fn(this);
+    }
+});
+
 app.get('/500', function(req, res, next){
   // trigger a generic (500) error
   next(new Error('keyboard cat!'));

@@ -41,9 +41,9 @@
 			<tr>
 				<td>{{~no}}</td>
 				{{#if bywiki}}
-				<td><a href="/_html/issues/type/{{type}}">{{~type}}</a></td>
-				{{else}}
 				<td><a href="/_html/{{wiki}}/issues/type/{{type}}">{{~type}}</a></td>
+				{{else}}
+				<td><a href="/_html/issues/type/{{type}}">{{~type}}</a></td>
 				{{/if}}
 				<td><a href="/_html/{{wiki}}/issues/{{page}}/{{revision}}">{{~page}}</a></td>
 				<td><a href="/_html/{{wiki}}/issues/">{{~wiki}}</a></td>
@@ -57,9 +57,12 @@
 			{{#if @last}}
 			</tbody>
 			</table>
-			{{#if links.href}}
-			<div> <a href="/_html{{links.href}}">More</a></div>
-			{{/if}}
+			<br><br>	
+			{{#next links.1.ref "next"}}
+				<div id="seg" style="float:right;position: relative;left: 100px;">
+					<a class="ui large label" href="/_html{{links.1.href}}"> next </a>
+				</div>
+			{{/next}}
 			{{/if}}
 			{{~/each}}
 	{{/if}}

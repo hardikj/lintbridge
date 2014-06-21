@@ -5,16 +5,18 @@
 		<div class="column">
 			<div class="ui ribbon label"> Type </div>
 			<p><a href="/_html/issues/type/{{entries.type}}">{{entries.type}}</a></p>
-			<div class="ui ribbon label"> Page </div>
-			<p><a href="/_html/{{entries.wiki}}/issues/{{entries.page}}">{{entries.page}}</a></p>
-			<div class="ui ribbon label"> wiki </div>
+			<div class="ui ribbon label"> Wiki </div>
 			<p><a href="/_html/{{entries.wiki}}/issues/">{{entries.wiki}}</a></p>
+			<div class="ui ribbon label"> Page </div>
+			<p><a href="{{entries.wikiurl}}&oldid={{entries.0.revision}}">{{entries.page}}</a></p>
+			<div class="ui ribbon label"> Revision </div>
+			<p><a href="/_html/{{entries.wiki}}/issues/{{entries.page}}">{{entries.revision}}</a></p>
 			<div class="ui ribbon label"> DSR </div>
 			<p>{{entries.dsr}}</p>
 			<div class="ui divider"></div>
 			<div id="wikiurl">
 				<a style="margin-right:50px" class="ui large label"> Fix this </a>
-				<a href="{{entries.wikiurl}}" target="_"> Click Here</a>
+				<a href="{{entries.wikiurl}}&action=edit" target="_"> Click Here</a>
 			</div>	
 		</div>
 		

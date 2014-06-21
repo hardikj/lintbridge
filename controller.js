@@ -43,7 +43,7 @@ exports.filterById = function (req, res){
 
 	db.collection('lints', function(err, collection){
 		collection.findOne({'_id':new BSON.ObjectID(id)}, function(err, item) {
-			item.wikiurl = item.wikiurl+"/w/index.php?title="+item.page+"&action=edit";
+			item.wikiurl = item.wikiurl+"/w/index.php?title="+item.page;
 			if (item.src instanceof Array) {
 				arr = true;
 			}
@@ -172,7 +172,7 @@ exports.filterAllByPage = function(req, res, next) {
 
 		stream.on("data", function(item) {
 			item.s = item.src;
-			item.wikiurl = item.wikiurl+"/w/index.php?title="+item.page+"&action=edit";
+			item.wikiurl = item.wikiurl+"/w/index.php?title="+item.page;
 			if (item.src instanceof Array) {
 				item.arr = true;
 				if (item.src.length>16) {
@@ -211,7 +211,7 @@ exports.filterAllByRevision = function(req, res, next) {
 
 		stream.on("data", function(item) {
 			item.s = item.src;
-			item.wikiurl = item.wikiurl+"/w/index.php?title="+item.page+"&action=edit";
+			item.wikiurl = item.wikiurl+"/w/index.php?title="+item.page;
 			if (item.src instanceof Array) {
 				item.arr = true;
 				if (item.src.length>16) {
