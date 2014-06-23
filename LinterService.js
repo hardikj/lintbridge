@@ -38,7 +38,10 @@ var pagingLogic = function(item, paging){
 			paging.push = true;
 
 		if (!paging.first && paging.count === pageflag && paging.push) {
-			item.links.push({ref:"prev", href:paging.href+paging.prev._id});
+			if(paging.prevui && paging.prev){
+				item.links.push({ref:"prev", href:paging.href+paging.prev._id});
+				item.links.push({ref:"prevui", href:paging.href+paging.prevui._id});
+			}
 		}
 
 		if ( paging.push ) {
@@ -52,6 +55,9 @@ var pagingLogic = function(item, paging){
 		paging.count -= 1;
 	}
 	paging.prev = item;
+	if(item.no%pageflag === 0 && pageflag !== 0 && !paging.push) {
+		paging.prevui = item;
+	}
 	return;
 };
 
