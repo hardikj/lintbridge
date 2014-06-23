@@ -13,7 +13,7 @@ app.use(bodyParser({limit:'50mb'}));
 app.use('/static', express.static(__dirname + '/static'));
 app.use(app.router);
 
-// error handle
+// Middleware to handle erros
 app.use(function(req, res, next){
 	res.status(404);
 
@@ -36,17 +36,6 @@ res.status(err.status || 500);
   res.render('500', { error: err });
 });*/
 
-app.get('/404', function(req, res, next){
-  next();
-});
-
-app.get('/403', function(req, res, next){
-  // trigger a 403 error
-  var err = new Error('not allowed!');
-  err.status = 403;
-  next(err);
-});
-
 // handle bars helpers
 
 hbs.registerHelper('next', function(lvalue, rvalue, options) {
@@ -67,6 +56,19 @@ hbs.registerHelper('prev', function(lvalue, rvalue, options) {
     } else {
         return options.fn(this);
     }
+});
+
+// 404 and 500 exception handlers
+
+app.get('/404', function(req, res, next){
+  next();
+});
+
+app.get('/403', function(req, res, next){
+  // trigger a 403 error
+  var err = new Error('not allowed!');
+  err.status = 403;
+  next(err);
 });
 
 app.get('/500', function(req, res, next){
