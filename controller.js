@@ -253,3 +253,41 @@ exports.findTypes = function(req,res){
 			res.render('index', {entries:item, list:true, ltype:true}); });
 	});
 };
+
+exports.stats = function(req, res){
+	
+	db.collection('lints', function(err, collection) {
+		var typecnt, all, foster, mendtag, mstarttag, strip;
+		var mixtemp, pageno=0;
+		collection.distinct('page', function(err, item) {
+			pageno = item.length;
+			collection.find().toArray(function(err, item) {
+				all = item.length;
+				collection.find({'type':'fostered'}).toArray(function(err, item) {
+					foster = item.length;
+					collection.find({'type':'strippedTag'}).toArray(function(err, item) {
+						strip = item.length;
+						collection.find({'type':'missing-end-tag'}).toArray(function(err, item) {
+							mendtag = item.length;
+							collection.find({'type':'missing-end-tag'}).toArray(function(err, item) {
+								mendtag = item.length;
+								collection.find({'type':'missing-start-tag'}).toArray(function(err, item) {
+									mstarttag = item.length;
+									collection.find({'type':'Mixed-template'}).toArray(function(err, item) {
+										mixtemp = item.length;
+										collection.distinct('type', function(err, item) {
+											typecnt = item.length;
+											stats = {pagecnt:pageno, all:all, foster:foster, strip:strip, mendtag:mendtag, mstarttag:mstarttag, mixtemp:mixtemp};
+											res.render('stats', {stats:stats});
+										});
+									});
+								});
+							});
+						});
+					});
+				});
+
+			});
+		});
+	});
+};

@@ -80,6 +80,8 @@ app.get("/", function(req, res){
 	res.render('main', {layout:false});
 });
 
+app.get("/stats", controller.stats);
+
 /*
 *	html routes
 */
