@@ -19,7 +19,7 @@ db.open(function(err, db) {
 	}
 });
 
-var pageflag = 100;
+GLOBAL.pageflag = 100;
 
 var pagingLogic = function(item, paging){
 
@@ -65,13 +65,19 @@ exports.findAll = function(req, res) {
 	var lints = [],
 		url = require('url');
 	var url_parts = url.parse(req.url, true);
+	
+	if(url_parts.query.limit) {
+		GLOBAL.pageflag = url_parts.query.limit;
+		console.log("served", pageflag, "lints");
+	}
+	
 	var paging ={count:pageflag,
 				no : 0,
 				first:null,
 				push:false,
 				query:url_parts.query.from,
 				lints: lints,
-				href: "/issues/?from="};
+				href: "/issues/?limit="+pageflag+"&from="};
 
 	res.setHeader("Content-Type", "application/json");
 	if (paging.query) {
