@@ -1,3 +1,17 @@
+/*
+  Utility script to fill checkwiki database.
+  To test locally create a database checkwiki with following schema.
+
+  CREATE TABLE IF NOT EXISTS cw_error
+  (Project VARCHAR(20) NOT NULL,
+  Title VARCHAR(100) NOT NULL,
+  Error SMALLINT NOT NULL,
+  Notice VARCHAR(400),
+  Ok INT,
+  Found DATETIME,
+  PRIMARY KEY (Project, Title, Error) )
+
+*/
 var request = require("request");
 var mysql   = require('mysql');
 
@@ -38,12 +52,11 @@ pool.getConnection(function(err, connection) {
       next = false;
     }
     console.log(next);
-    return next;
   };
 
   var requestCB = function(error, response, body) {
     if (!error && response.statusCode === 200) {
-      next = process(body);
+      process(body);
     }
     else {
       console.log(error);
@@ -52,8 +65,8 @@ pool.getConnection(function(err, connection) {
     }
   };
 
-  var errorMap = { 'missing-end-tag' : 102, 'missing-start-tag' : 103, 'strippedTag' : 104, 'ObsoleteTag':105, 'fostered':106,
-                   'ignored-table-attr':107, 'BogusImageOptions' : 108 };
+  var errorMap = { 'missing-end-tag' : 102, 'missing-start-tag' : 103, 'stripped-tag' : 104, 'obsolete-tag':105, 'fostered':106,
+                   'ignored-table-attr':107, 'bogus-image-options' : 108 };
 
   request("http://lintbridge.wmflabs.org/_api/issues?limit=1000",  requestCB);
 
