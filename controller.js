@@ -269,7 +269,7 @@ exports.stats = function(req, res) {
 			GLOBAL.foster = item.length;
 		});
 
-		collection.find({'type':'strippedTag'}).toArray(function(err, item) {
+		collection.find({'type':'stripped-tag'}).toArray(function(err, item) {
 			GLOBAL.strip = item.length;
 		});
 
@@ -281,15 +281,15 @@ exports.stats = function(req, res) {
 			GLOBAL.mstarttag = item.length;
 		});
 
-		collection.find({'type':'ObsoleteTag'}).toArray(function(err, item) {
+		collection.find({'type':'obsolete-tag'}).toArray(function(err, item) {
 			GLOBAL.obsolete = item.length;
 		});
 
-		collection.find({'type':'Mixed-content'}).toArray(function(err, item) {
+		collection.find({'type':'mixed-content'}).toArray(function(err, item) {
 			GLOBAL.mixed_ctn = item.length;
 		});
 
-		collection.find({'type':'Multi-template'}).toArray(function(err, item) {
+		collection.find({'type':'multi-template'}).toArray(function(err, item) {
 			multemp = item.length;
 			collection.distinct('type', function(err, item) {
 				typecnt = item.length;
