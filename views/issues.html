@@ -30,6 +30,10 @@
 				<p><a href="/_html/issues/type/{{type}}">{{type}}</a></p>
 				<div class="ui ribbon label"> Wiki Text Source Offsets </div>
 				<p>{{dsr}}</p>
+				{{#if entries.inTransclusion}}
+					<div class="ui ribbon label"> Issues inside Template </div>
+					<p> True </p>
+				{{/if}}
 			</div>
 		
 			<div class="ui vertical divider"></div>

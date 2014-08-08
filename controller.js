@@ -289,6 +289,10 @@ exports.stats = function(req, res) {
 			GLOBAL.mixed_ctn = item.length;
 		});
 
+		collection.find({'type':'ignored-table-attr'}).toArray(function(err, item) {
+			GLOBAL.ignored_tba = item.length;
+		});
+
 		collection.find({'type':'multi-template'}).toArray(function(err, item) {
 			multemp = item.length;
 			collection.distinct('type', function(err, item) {
@@ -301,6 +305,7 @@ exports.stats = function(req, res) {
 						mstarttag:GLOBAL.mstarttag,
 						obsolete:GLOBAL.obsolete,
 						mixed_ctn:GLOBAL.mixed_ctn,
+						ignored_tba:GLOBAL.ignored_tba,
 						multemp:multemp
 					};
 				res.render('stats', {stats:stats});

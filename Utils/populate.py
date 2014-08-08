@@ -23,7 +23,7 @@ for i in range(1,50):
 
 	for tr in soup.find_all('tr', {'status': ['skip', 'fail']}):
 		a = tr.td.find_all('a')
-		fullLink = a[1].get('href')
+		fullLink = a[2].get('href')
 		href = ''.join(fullLink.split('/_rt'))
 		r = http.request('GET', href)
 		print("done")

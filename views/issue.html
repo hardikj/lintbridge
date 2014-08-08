@@ -13,6 +13,10 @@
 			<p><a href="/_html/{{entries.wiki}}/issues/{{entries.page}}">{{entries.revision}}</a></p>
 			<div class="ui ribbon label"> Wiki Text Source Offsets </div>
 			<p>{{entries.dsr}}</p>
+			{{#if entries.inTransclusion}}
+				<div class="ui ribbon label"> Issues inside Template </div>
+				<p> True </p>
+			{{/if}}
 			<div class="ui divider"></div>
 			<div id="wikiurl">
 				<a style="margin-right:50px" class="ui large label"> Fix this </a>

@@ -11,6 +11,17 @@
   Found DATETIME,
   PRIMARY KEY (Project, Title, Error) )
 
+  CREATE TABLE IF NOT EXISTS cw_overview
+  (ID SMALLINT,
+  Project VARCHAR(20) NOT NULL,
+  Lang VARCHAR(100),
+  Errors MEDIUMINT,
+  Done MEDIUMINT,
+  Last_Dump VARCHAR(100),
+  Last_Update VARCHAR(100),
+  Project_Page VARCHAR(400),
+  Translation_Page VARCHAR(400)
+  PRIMARY KEY (Project) )
 */
 var request = require("request");
 var mysql   = require('mysql');
