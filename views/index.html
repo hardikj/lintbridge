@@ -41,13 +41,14 @@
 	{{/next}}
 	{{/if}}
 	{{#if @first}}
-	<table class="ui five column table basic">
+	<table class="ui six column table basic">
 		<thead>
 			<tr>
 				<th>No</th>
 				<th >Type</th>
 				<th>Page</th>
 				<th>Wiki</th>
+				<th>In Transclusion</th>
 				<th>Action</th>
 			</tr>
 			<thead>
@@ -62,6 +63,11 @@
 				{{/if}}
 				<td><a href="/_html/{{wiki}}/issues/{{page}}/{{revision}}">{{~page}}</a></td>
 				<td><a href="/_html/{{wiki}}/issues/">{{~wiki}}</a></td>
+				{{#if inTransclusion}}
+					<td>{{~inTransclusion}}</td>
+				{{else}}
+					<td>false</td>
+				{{/if}}
 				<td class="active">
 					<i class="attention icon">
 						<a href="/_html/issues/{{_id}}">Fix This</a> | &nbsp
