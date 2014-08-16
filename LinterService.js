@@ -70,7 +70,7 @@ exports.findAll = function(req, res) {
 		GLOBAL.pageflag = url_parts.query.limit;
 		console.log("served", pageflag, "lints");
 	}
-	
+
 	var paging ={count:pageflag,
 				no : 0,
 				first:null,
@@ -278,7 +278,18 @@ exports.filterByRevision = function(req, res) {
 	});
 };
 
-exports.addLint = function(req, res){
+exports.countIssues = function(req, res) {
+	var wiki = req.params.wiki,
+		page = req.params.page;
+
+	db.collection('lints', function(err, collection) {
+		collection.find({'wiki':wiki, 'page':page}).toArray(function(err, item) {
+			return res.json([item.length]);
+		});
+	});
+};
+
+exports.addLint = function(req, res) {
 	var issues = req.body,
 		BreakException = {},
 		resid;

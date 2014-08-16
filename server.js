@@ -141,8 +141,11 @@ app.get('/_api/:wiki/issues/type/:type', linterService.filterByWikiAndType);
 // filter issues by page name
 app.get('/_api/:wiki/issues/:page', linterService.filterByPage);
 
-// fi;ter by current revision
+// filter by current revision
 app.get('/_api/:wiki/issues/:page/:revision', linterService.filterByRevision);
+
+// 
+app.get('/_api/:wiki/page/:page/count', linterService.countIssues);
 
 // Add a new lint
 app.post('/_api/add', linterService.addLint);
